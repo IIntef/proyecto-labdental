@@ -28,21 +28,24 @@ function filtrarTabla() {
     for (var i = 0; i < rows.length; i++) {
         var cells = rows[i].getElementsByTagName('td');
         var match = false;
-        var estadoCell = cells[2].innerText; // Asumiendo que la columna de estado es la tercera (índice 2)
+        var estadoCell = rows[i].querySelector('td[data-sort="estado"]');
 
         // Verifica si el estado coincide con el filtro
-        if (estadoValue === "" || estadoCell === estadoValue) {
+        if (estadoValue === "" || (estadoCell && estadoCell.innerText === estadoValue)) {
             // Verifica si el texto de búsqueda coincide
             for (var j = 0; j < cells.length - 1; j++) {  // Excluye la columna de acciones
                 if (cells[j].innerText.toLowerCase().indexOf(searchValue) > -1) {
                     match = true;
                     break;
                 }
+
+                
             }
         }
 
         rows[i].style.display = match ? '' : 'none';
     }
+    renderTable(); // Actualiza la paginación después de filtrar
 }
 
 // Agrega eventos para filtrar la tabla

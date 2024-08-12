@@ -190,7 +190,7 @@ class Cita(models.Model):
         elif self.estado == 'cancelada':
             citas_activas = Cita.objects.filter(
                 fecha_hora=self.fecha_hora, 
-                estado__in=['programada', 'completada']
+                estado__in=['programada', 'asistida']
             ).exclude(pk=self.pk).exists()
             if not citas_activas:
                 self.fecha_hora.disponible = True
@@ -208,7 +208,7 @@ class Cita(models.Model):
 
     def confirmar_actualizacion(self):
         if self.estado == 'programada':
-            self.estado = 'completada'
+            self.estado = 'asistida'
             self.asistio = True
             self.save()
             return True

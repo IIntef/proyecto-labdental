@@ -3,8 +3,8 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/elementos.css' %}?v1.7">
-<link rel="stylesheet" href="{% static 'css/listar_fechas.css' %}?v1.7">
+<link rel="stylesheet" href="{% static 'css/elementos.css' %}?v1.9">
+<link rel="stylesheet" href="{% static 'css/listar_fechas.css' %}?v1.9">
 {% endblock %}
 
 {% block titulo %}
@@ -34,7 +34,7 @@ Elementos del Inventario
                     <span class="input-group-text custom-select-trigger" id="filterTrigger"><i
                             class="fas fa-filter"></i></span>
                 </div>
-                <div class="input-group" style="width: auto;">
+                <div class="input-group" style="width: 200px;">
                     <input id="searchInput" class="form-control" type="text" placeholder="Buscar por producto...">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
@@ -50,15 +50,15 @@ Elementos del Inventario
                         <tr>
                             <th id="headerProducto" data-sort="producto" scope="col">
                                 Producto
-                                <i class="fas fa-arrow-down-short-wide sort-icon" data-sort="producto"></i>
+                                <i class="fas fa-arrow-down-short-wide sort-icon a" data-sort="producto"></i>
                             </th>
                             <th id="headerCantidad" data-sort="cantidad" scope="col">
                                 Cantidad
-                                <i class="fas fa-arrow-down-short-wide sort-icon" data-sort="cantidad"></i>
+                                <i class="fas fa-arrow-down-short-wide sort-icon a" data-sort="cantidad"></i>
                             </th>
                             <th id="headerEstado" data-sort="estado" scope="col">
                                 Estado
-                                <i class="fas fa-arrow-down-short-wide sort-icon" data-sort="estado"></i>
+                                <i class="fas fa-arrow-down-short-wide sort-icon a" data-sort="estado"></i>
                             </th>
                             <th scope="col">Acciones</th>
                         </tr>
@@ -116,7 +116,7 @@ Elementos del Inventario
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/elementos.js' %}?v1.6"></script>
+<script src="{% static 'js/elementos.js' %}?v1.9"></script>
 {% endblock %}
 
 

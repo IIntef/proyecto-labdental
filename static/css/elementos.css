@@ -1,9 +1,5 @@
 /* Estilos generales */
-.card-header .d-flex {
-  flex-wrap: wrap;
-  gap: 10px;
-}
-i{
+i.a{
   color: #f8f9fa;
 }
 .btn-custom {
@@ -15,7 +11,6 @@ i{
 
 .input-group {
   width: auto;
-  flex: 0 1 auto;
 }
 
 #searchInput, #estadoFilter {
@@ -49,11 +44,6 @@ i{
 
 /* Responsive adjustments */
 @media (max-width: 992px) {
-  .card-header .d-flex {
-      flex-direction: column;
-      align-items: stretch;
-  }
-
   .btn-custom, .input-group {
       width: 100%;
       margin-bottom: 0.5rem;
@@ -82,7 +72,7 @@ i{
   top: 0;
   right: 0;
   height: 100%;
-  width: 2.5rem;
+  width: 2.8rem;
   pointer-events: none;
   display: flex;
   align-items: center;
@@ -142,7 +132,6 @@ i{
 
 .pagination {
   display: flex;
-  gap: 0.5rem;
   margin-left: auto; /* Alinea la paginación a la derecha */
 }
 
@@ -162,17 +151,7 @@ i{
   .input-group-text i {
     margin-right: 0 !important;
   }
-  .card-header .d-flex {
-    flex-wrap: wrap;
-  }
-
-  .card-header .d-flex > * {
-    flex-basis: 100%;
-    margin-bottom: 0.5rem;
-  }
-
-  .card-header .d-flex .d-flex {
-    flex-basis: auto;
-    margin-bottom: 0;
+  #estadoFilter{
+    width: 0;
   }
 }

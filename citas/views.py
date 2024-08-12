@@ -315,7 +315,7 @@ def editarcitas(request, cita_id):
             if nueva_fecha_hora != fecha_hora_original:
                 citas_en_fecha_original = Cita.objects.filter(
                     fecha_hora=fecha_hora_original, 
-                    estado__in=['programada', 'completada']
+                    estado__in=['programada', 'asistida']
                 ).exclude(id=cita_id)
                 if not citas_en_fecha_original.exists():
                     fecha_hora_original.disponible = True
