@@ -145,3 +145,34 @@ i{
   gap: 0.5rem;
   margin-left: auto; /* Alinea la paginación a la derecha */
 }
+
+@media (max-width: 767px) {
+  .btn-custom i {
+    margin-right: 0 !important;
+  }
+
+  .btn-custom span {
+    display: none;
+  }
+
+  .input-group-text span {
+    display: none;
+  }
+
+  .input-group-text i {
+    margin-right: 0 !important;
+  }
+  .card-header .d-flex {
+    flex-wrap: wrap;
+  }
+
+  .card-header .d-flex > * {
+    flex-basis: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-header .d-flex .d-flex {
+    flex-basis: auto;
+    margin-bottom: 0;
+  }
+}
