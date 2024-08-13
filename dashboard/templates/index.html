@@ -11,7 +11,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ titulo }}</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v3.3" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v3.6" />
     {% block extra_css %} {% endblock %}
     <link
       rel="stylesheet"
@@ -49,7 +49,7 @@
         <div class="headersup">
           <div class="returnhome">
             <a href="{% url 'dashboard' %}">
-              <p id="home">Home / <b>Dashboard</b></p>
+              <p id="home">Inicio<br>Dashboard</p>
             </a>
           </div>
 
@@ -114,8 +114,15 @@
         </div>
 
         <div class="headerinf">
-          <p id="home2">{% block titulo %}Home / Dashboard{% endblock %}</p>
+          <p id="home2">
+              <div class="breadcrumbs">
+                <a href="{% url 'dashboard' %}">Inicio</a>
+                {% block titulo %}
+                {% endblock %}
+              </div>
+          </p>
         </div>
+        
       </div>
 
       {% block content %} {% endblock %}

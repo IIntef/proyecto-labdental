@@ -3,8 +3,7 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/elementos.css' %}?v1.9">
-<link rel="stylesheet" href="{% static 'css/listar_fechas.css' %}?v1.9">
+<link rel="stylesheet" href="{% static 'css/tablas.css' %}?v2.2">
 {% endblock %}
 
 {% block titulo %}
@@ -34,7 +33,7 @@ Elementos del Inventario
                     <span class="input-group-text custom-select-trigger" id="filterTrigger"><i
                             class="fas fa-filter"></i></span>
                 </div>
-                <div class="input-group" style="width: 200px;">
+                <div class="input-group" style="width: auto;">
                     <input id="searchInput" class="form-control" type="text" placeholder="Buscar por producto...">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
@@ -72,9 +71,9 @@ Elementos del Inventario
                             <td data-sort="estado">{{ elemento.get_estado_display }}</td>
                             <td>
                                 <a class="btn btn-info" href="{% url 'editarelementos' elemento.id %}"
-                                    role="button">Editar</a>
+                                    role="button"><i class="fas fa-pen sort-icon a"></i></a>
                                 <button class="btn btn-danger"
-                                    onclick="confirmarEliminacion('{{ elemento.id }}', '{{ elemento.producto }}')">Borrar</button>
+                                    onclick="confirmarEliminacion('{{ elemento.id }}', '{{ elemento.producto }}')"><i class="fas fa-trash sort-icon a"></i></button>
                             </td>
                         </tr>
                         {% endif %}
@@ -116,13 +115,5 @@ Elementos del Inventario
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/elementos.js' %}?v1.9"></script>
+<script src="{% static 'js/filtros.js' %}?v3.9"></script>
 {% endblock %}
-
-
-
-
-
-
-
-

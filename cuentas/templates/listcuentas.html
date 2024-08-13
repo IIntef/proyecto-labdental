@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/elementos.css' %}?v1.2">
+<link rel="stylesheet" href="{% static 'css/tablas.css' %}?v2.2">
 {% endblock %}
 
 {% block titulo %}
@@ -12,77 +12,123 @@ Pacientes Registrados
 
 {% block content %}
 <div class="card">
-    <div class="card-header d-flex justify-content-between">
-        <a class="btn btn-primary btn-custom" href="{% url 'dashboard' %}" role="button">
-            <i class="fas fa-arrow-left text-white"></i> Volver
-        </a>
-        <a class="btn btn-success btn-custom" href="{% url 'crearcuentas' %}" role="button">
-            <i class="fas fa-plus text-white"></i> Agregar Nuevo Paciente
-        </a>
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="d-flex">
+                <a class="btn btn-primary btn-custom me-2" href="{% url 'dashboard' %}" role="button">
+                    <i class="fas fa-arrow-left text-white"></i> <span> Volver </span>
+                </a>
+                <a class="btn btn-success btn-custom" href="{% url 'crearcuentas' %}" role="button">
+                    <i class="fas fa-plus text-white"></i> <span> Agregar Nuevo Paciente </span>
+                </a>
+            </div>
+            <div class="d-flex align-items-center flex-wrap">
+                <div class="input-group me-2 custom-select-wrapper" style="width: auto;">
+                    <select id="estadoFilter" class="form-select custom-select" aria-label="Filtro por tipo de documento">
+                        <option value="">Todos los tipos de documento</option>
+                        <option value="C.C">Cédula de Ciudadanía</option>
+                        <option value="T.I">Tarjeta de Identidad</option>
+                        <option value="C.E">Cédula de Extranjería</option>
+                        <option value="C.I">Carnet de Identidad</option>
+                    </select>
+                    <span class="input-group-text custom-select-trigger" id="filterTrigger"><i class="fas fa-filter"></i></span>
+                </div>
+                <div class="input-group" style="width: auto;">
+                    <input id="searchInput" class="form-control" type="text" placeholder="Buscar paciente...">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+            </div>
+        </div>
     </div>
+
     <div class="card-body">
-        <!-- Filtros -->
-        <div class="mb-3">
-            <select id="tipoDocumentoFilter" class="form-select">
-                <option value="">Todos los tipos de documento</option>
-                <option value="C.C">Cédula de Ciudadanía</option>
-                <option value="T.I">Tarjeta de Identidad</option>
-                <option value="C.E">Cédula de Extranjería</option>
-                <option value="C.I">Carnet de Identidad</option>
-            </select>
-        </div>
+        <div class="table-container">
+            <div class="table-responsive">
+                <table id="elementosTable" class="table table-primary table-centered">
+                    <thead>
+                        <tr>
+                            <th data-sort="tipo" scope="col">
+                                Tipo Documento
+                                <i class="fas fa-arrow-down-short-wide sort-icon a"></i>
+                            </th>
+                            <th data-sort="numero" scope="col">
+                                Numero Documento
+                                <i class="fas fa-arrow-down-short-wide sort-icon a"></i>
+                            </th>
+                            <th data-sort="nombre" scope="col">
+                                Nombre
+                                <i class="fas fa-arrow-down-short-wide sort-icon a"></i>
+                            </th>
+                            <th scope="col">Imagen</th>
+                            <th data-sort="email" scope="col">
+                                E-mail
+                                <i class="fas fa-arrow-down-short-wide sort-icon a"></i>
+                            </th>
+                            <th data-sort="direccion" scope="col">
+                                Dirección
+                                <i class="fas fa-arrow-down-short-wide sort-icon a"></i>
+                            </th>
+                            <th data-sort="edad" scope="col">
+                                Edad
+                                <i class="fas fa-arrow-down-short-wide sort-icon a"></i>
+                            </th>
+                            <th data-sort="ocupacion" scope="col">
+                                Ocupación
+                                <i class="fas fa-arrow-down-short-wide sort-icon a"></i>
+                            </th>
+                            <th data-sort="celular" scope="col">
+                                Celular
+                                <i class="fas fa-arrow-down-short-wide sort-icon a"></i>
+                            </th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cuenta in cuentas %}
+                        {% if not cuenta.is_superuser %}
+                        <tr>
+                            <td data-sort="estado">{{ cuenta.get_tipo_display }}</td>
+                            <td data-sort="numero">{{ cuenta.numero }}</td>
+                            <td data-sort="nombre">{{ cuenta.username }}</td>
+                            <td>
+                                {% if cuenta.imagen %}
+                                <img src="{{ cuenta.imagen.url }}" alt="Imagen de cuenta" width="100px" height="100px"
+                                    style="object-fit: cover; object-position: center;">
+                                {% else %}
+                                <p>No hay imagen disponible</p>
+                                {% endif %}
+                            </td>
+                            <td data-sort="email">{{ cuenta.email }}</td>
+                            <td data-sort="direccion">{{ cuenta.direccion }}</td>
+                            <td data-sort="edad">{{ cuenta.edad }}</td>
+                            <td data-sort="ocupacion">{{ cuenta.ocupacion }}</td>
+                            <td data-sort="celular">{{ cuenta.celular }}</td>
+                            <td>
+                                <a class="btn btn-info" href="{% url 'editarcuentas' cuenta.id %}" role="button"><i class="fas fa-pen sort-icon a"></i></a>
+                                <button class="btn btn-danger"
+                                    onclick="confirmarEliminacion('{{ cuenta.id }}', '{{ cuenta.username }}')"><i class="fas fa-trash sort-icon a"></i></button>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
 
-        <div class="mb-3">
-            <input type="text" id="searchInput" class="form-control" placeholder="Buscar paciente...">
-        </div>
-
-        <div class="table-responsive">
-            <table id="patientTable" class="table table-primary">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Tipo Documento</th>
-                        <th scope="col">No. Documento</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Imagen</th>
-                        <th scope="col">E-mail</th>
-                        <th scope="col">Dirección</th>
-                        <th scope="col">Edad</th>
-                        <th scope="col">Ocupación</th>
-                        <th scope="col">Celular</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for cuenta in cuentas %}
-                    {% if not cuenta.is_superuser %}
-                    <tr>
-                        <td>{{ cuenta.id }}</td>
-                        <td>{{ cuenta.get_tipo_display }}</td>
-                        <td>{{ cuenta.numero }}</td>
-                        <td>{{ cuenta.username }}</td>
-                        <td>{% if cuenta.imagen %}
-                            <img src="{{ cuenta.imagen.url }}" alt="Imagen de cuenta" width="100px" height="100px"
-                                style="object-fit: cover; object-position: center;">
-                            {% else %}
-                            <p>No hay imagen disponible</p>
-                            {% endif %}
-                        </td>
-                        <td>{{ cuenta.email }}</td>
-                        <td>{{ cuenta.direccion }}</td>
-                        <td>{{ cuenta.edad }}</td>
-                        <td>{{ cuenta.ocupacion }}</td>
-                        <td>{{ cuenta.celular }}</td>
-                        <td>
-                            <a class="btn btn-info" href="{% url 'editarcuentas' cuenta.id %}" role="button">Editar</a>
-                            <button class="btn btn-danger"
-                                onclick="confirmarEliminacion('{{ cuenta.id }}', '{{ cuenta.username }}', '{{ cuenta.numero }}')">Borrar</button>
-                        </td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
+                <!-- Controles de paginación -->
+                <div class="pagination-controls d-flex align-items-center mt-3">
+                    <div class="show-items me-3">
+                        Mostrar
+                        <select id="itemsPerPage" class="form-select custom-select" aria-label="Mostrar elementos por página">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        elementos
+                    </div>
+                    <div id="pagination" class="pagination d-flex"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -91,8 +137,7 @@ Pacientes Registrados
 <div id="confirmarModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="cerrarModal()">&times;</span>
-        <p>¿Estás seguro de que deseas eliminar la cuenta de <strong id="historiaUsername"></strong> (Número: <strong
-                id="historiaNumero"></strong>)?</p>
+        <p>¿Estás seguro de que deseas eliminar la cuenta de <strong id="elementoProducto"></strong>?</p>
         <form id="formEliminar" method="POST" action="">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -100,4 +145,8 @@ Pacientes Registrados
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/filtros.js' %}?v3.9"></script>
 {% endblock %}

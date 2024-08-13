@@ -3,68 +3,97 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/historias.css' %}?v1.3">
+<link rel="stylesheet" href="{% static 'css/tablas.css' %}?v2.2">
 {% endblock %}
 
 {% block titulo %}
-Historias Clínicas{% endblock %}
+Historias Clínicas
+{% endblock %}
 
 {% block content %}
 <div class="card">
-    <div class="card-header d-flex justify-content-between">
-        <a class="btn btn-primary btn-custom" href="{% url 'dashboard' %}" role="button">
-            <i class="fas fa-arrow-left text-white"></i> Volver
-        </a>
-        {% if request.user.is_superuser %}
-        <a class="btn btn-success btn-custom" href="{% url 'crearhistorias' %}" role="button">
-            <i class="fas fa-plus text-white"></i> Agregar Nueva Historia Clínica
-        </a>
-        {% endif %}
-    </div>
-
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-primary">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Documento</th>
-                        <th scope="col">Paciente</th>
-                        <th scope="col">Fecha Historia</th>
-                        <th scope="col">Ver</th>
-                        <th scope="col">Borrar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for historia in historias %}
-                    <tr>
-                        <td>{{ historia.id }}</td>
-                        <td>{{ historia.numero }}</td>
-                        <td>{{ historia.username }}</td>
-                        <td>{{ historia.fecha_historia }}</td>
-                        <td>
-                            <a name="" id="" class="btn btn-info" href="{% url 'verhistorias' historia.id %}"
-                                role="button">Ver</a>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger"
-                                onclick="confirmarEliminacion('{{ historia.id }}', '{{ historia.username }}', '{{ historia.numero }}')">Borrar</button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="d-flex">
+                <a class="btn btn-primary btn-custom me-2" href="{% url 'dashboard' %}" role="button">
+                    <i class="fas fa-arrow-left text-white"></i> <span> Volver </span>
+                </a>
+                {% if request.user.is_superuser %}
+                <a class="btn btn-success btn-custom" href="{% url 'crearhistorias' %}" role="button">
+                    <i class="fas fa-plus text-white"></i> <span> Agregar Nueva Historia Clínica </span>
+                </a>
+                {% endif %}
+            </div>
+            <div class="d-flex align-items-center flex-wrap">
+                <div class="input-group" style="width: auto;">
+                    <select id="estadoFilter" style="display: none;"></select>
+                    <input id="searchInput" class="form-control" type="text" placeholder="Buscar...">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+            </div>
         </div>
     </div>
 
+    <div class="card-body">
+        <div class="table-container">
+            <div class="table-responsive">
+                <table id="elementosTable" class="table table-primary table-centered">
+                    <thead>
+                        <tr>
+                            <th id="headerDocumento" data-sort="numero" scope="col">
+                                Documento
+                                <i class="fas fa-arrow-down-short-wide sort-icon a" data-sort="numero"></i>
+                            </th>
+                            <th id="headerPaciente" data-sort="username" scope="col">
+                                Paciente
+                                <i class="fas fa-arrow-down-short-wide sort-icon a" data-sort="username"></i>
+                            </th>
+                            <th id="headerFecha" data-sort="fecha_historia" scope="col">
+                                Fecha Historia
+                                <i class="fas fa-arrow-down-short-wide sort-icon a" data-sort="fecha_historia"></i>
+                            </th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for historia in historias %}
+                        <tr>
+                            <td data-sort="numero">{{ historia.numero }}</td>
+                            <td data-sort="username">{{ historia.username }}</td>
+                            <td data-sort="fecha_historia">{{ historia.fecha_historia }}</td>
+                            <td>
+                                <a class="btn btn-info" href="{% url 'verhistorias' historia.id %}" role="button"><i class="fas fa-eye sort-icon a"></i></a>
+                                <button class="btn btn-danger" onclick="confirmarEliminacion2('{{ historia.id }}', '{{ historia.username }}', '{{ historia.numero }}')"><i class="fas fa-trash sort-icon a"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Controles de paginación -->
+                <div class="pagination-controls d-flex align-items-center mt-3">
+                    <div class="show-items me-3">
+                        Mostrar
+                        <select id="itemsPerPage" class="form-select custom-select" aria-label="Mostrar elementos por página">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        elementos
+                    </div>
+                    <div id="pagination" class="pagination d-flex"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal de confirmación -->
 <div id="confirmarModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="cerrarModal()">&times;</span>
-        <p>¿Estás seguro de que deseas eliminar la historia de <strong id="historiaUsername"></strong> (Número: <strong
-                id="historiaNumero"></strong>)?</p>
+        <p>¿Estás seguro de que deseas eliminar la historia de <strong id="historiaUsername"></strong> (Número: <strong id="historiaNumero"></strong>)?</p>
         <form id="formEliminar" method="POST" action="">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -75,5 +104,5 @@ Historias Clínicas{% endblock %}
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/historias.js' %}"></script>
+<script src="{% static 'js/filtros.js' %}?v3.9"></script>
 {% endblock %}
