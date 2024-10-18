@@ -3,17 +3,17 @@ from .models import UserProfile, Valoracion, Inventario, Fecha, Cita
 from django.core.validators import MaxValueValidator
 from PIL import Image
 
+
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['tipo', 'numero', 'username', 'imagen', 'email', 'direccion', 'edad', 'ocupacion', 'celular', 'acudiente']
+        fields = ['tipo', 'documento', 'nombre', 'imagen', 'correo', 'direccion', 'edad', 'ocupacion', 'celular', 'acudiente']
 
     tipo = forms.TypedChoiceField(
         choices=UserProfile.TIPO_CHOICES,
         coerce=int
     )
-    numero = forms.IntegerField(validators=[MaxValueValidator(9223372036854775807)])
-
 
     def clean_imagen(self):
         imagen = self.cleaned_data.get('imagen')
@@ -41,11 +41,10 @@ class UserForm(forms.ModelForm):
 class ValoracionForm(forms.ModelForm):
     class Meta:
         model = Valoracion
-        exclude = ['user', 'username', 'numero']
+        exclude = ['user', 'nombre', 'documento']
         widgets = {
             'fecha_historia': forms.DateInput(attrs={'type': 'date'}), 
         }
-
 
 class InventarioForm(forms.ModelForm):
     class Meta:
@@ -54,21 +53,18 @@ class InventarioForm(forms.ModelForm):
 
     estado = forms.ChoiceField(choices=Inventario.ESTADO)
 
+from django.core.exceptions import ValidationError
 
 class FechaForm(forms.ModelForm):
+    hora_final = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time', 'required': 'required'}))
+
     class Meta:
         model = Fecha
-        fields = ['fecha', 'hora']
-        widgets = {
-            'fecha': forms.DateInput(attrs={'type': 'date'}),
-            'hora': forms.TimeInput(attrs={'type': 'time'}),
-        }
-
+        fields = ['fecha', 'hora', 'hora_final']
 
 class CitaForm(forms.ModelForm):
-    
-    fecha = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-    hora = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
+    fecha = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'required': 'required'}))  # Fecha obligatoria
+    hora = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time', 'required': 'required'}))  # Hora obligatoria
     motivo = forms.ChoiceField(choices=Cita.MOTIVO_CHOICES)
 
     class Meta:
@@ -76,7 +72,7 @@ class CitaForm(forms.ModelForm):
         fields = ['fecha', 'hora', 'motivo', 'paciente']
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)  # Obtén el usuario de kwargs
+        self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
         if not self.user:
@@ -84,16 +80,24 @@ class CitaForm(forms.ModelForm):
 
         if not self.user.is_superuser:
             self.fields['paciente'] = forms.ModelChoiceField(
-                queryset=UserProfile.objects.filter(numero=self.user.numero, is_active=True),
+                queryset=UserProfile.objects.filter(documento=self.user.documento, is_active=True),
                 required=False
             )
 
     def clean(self):
         cleaned_data = super().clean()
         paciente = cleaned_data.get('paciente')
+        fecha = cleaned_data.get('fecha')
+        hora = cleaned_data.get('hora')
 
         if paciente and not paciente.is_active:
             raise forms.ValidationError('El paciente seleccionado no está activo.')
+
+        if not fecha:
+            raise forms.ValidationError('La fecha es obligatoria.')
+
+        if not hora:
+            raise forms.ValidationError('La hora es obligatoria.')
 
         return cleaned_data
 
@@ -101,17 +105,22 @@ class CitaForm(forms.ModelForm):
         cita = super().save(commit=False)
         fecha = self.cleaned_data['fecha']
         hora = self.cleaned_data['hora']
+
+        # Obtener o crear la instancia de Fecha
         fecha_hora, created = Fecha.objects.get_or_create(fecha=fecha, hora=hora)
+
+        # Asignar la instancia de Fecha a la cita
         cita.fecha_hora = fecha_hora
 
-        if not cita.id:  # Solo marca como no disponible si es una nueva cita
+        if created:
             fecha_hora.disponible = False
             fecha_hora.save()
-
-        if 'paciente' in self.cleaned_data:
-            cita.paciente = self.cleaned_data['paciente']
 
         if commit:
             cita.save()
 
         return cita
+
+  
+
+    

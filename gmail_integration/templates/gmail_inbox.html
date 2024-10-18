@@ -1,13 +1,15 @@
-{% extends 'index.html' %}
+{% extends 'inicio.html' %}
 
 {% load static %}
 
+{% block title %}Correos | Laboratorio Dental{% endblock %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/gmail.css' %}?v1.1">
+<link rel="stylesheet" href="{% static 'css/gmail.css' %}?v1.4">
 {% endblock %}
 
 {% block titulo %}
-GMAIL - CORREOS
+Gmail - Correos
 {% endblock %}
 
 {% block content %}
@@ -15,12 +17,12 @@ GMAIL - CORREOS
 <div class="email-container">
     <div class="card inbox">
         <div class="card-body">
-            <h4 class="card-title">Bandeja de Entrada</h4>
+            <h4 class="card-title" data-tooltip="Ver correos recibidos">Bandeja de Entrada</h4>
             <ul>
                 {% for email in email_list %}
                     <li>
-                        <h5 class="mb-1">{{ email.subject }}</h5>
-                        <p class="mb-1">{{ email.snippet }}</p>
+                        <h5 class="mb-1" data-tooltip="Asunto del correo">{{ email.snippet }}</h5>
+                        <p class="mb-1" data-tooltip="Contenido del correo">{{ email.subject }}</p>
                     </li> <br>
                 {% endfor %}
             </ul>
@@ -29,23 +31,23 @@ GMAIL - CORREOS
 
     <div class="card compose-email">
         <div class="card-body">
-            <h4 class="card-title">Enviar Nuevo Correo</h4>
+            <h4 class="card-title" data-tooltip="Redactar un nuevo correo">Enviar Nuevo Correo</h4>
             <form method="post" action="{% url 'send_email' %}">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="to">Para:</label>
-                    <input type="email" class="form-control" id="to" name="to" required>
+                    <label for="to" data-tooltip="Ingrese la dirección de correo del destinatario">Para:</label>
+                    <input type="email" class="form-control" id="to" name="to" required data-tooltip="Ingrese la dirección de correo del destinatario">
                 </div>
                 <div class="form-group">
-                    <label for="subject">Asunto:</label>
-                    <input type="text" class="form-control" id="subject" name="subject" required>
+                    <label for="subject" data-tooltip="Ingrese el asunto del correo">Asunto:</label>
+                    <input type="text" class="form-control" id="subject" name="subject" required data-tooltip="Ingrese el asunto del correo">
                 </div>
                 <div class="form-group">
-                    <label for="body">Mensaje:</label>
-                    <textarea class="form-control" id="body" name="body" rows="5" required></textarea>
+                    <label for="body" data-tooltip="Escriba el contenido del correo">Mensaje:</label>
+                    <textarea class="form-control" id="body" name="body" rows="5" required data-tooltip="Escriba el contenido del correo"></textarea>
                 </div>
-                <a class="btn btn-warning" href="{% url 'dashboard' %}" role="button">Volver</a>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <a class="btn btn-warning" href="{% url 'dashboard' %}" role="button" data-tooltip="Regresar al panel principal">Volver</a>
+                <button type="submit" class="btn btn-primary" data-tooltip="Enviar el correo">Enviar</button>
             </form>
         </div>
     </div>
@@ -53,9 +55,4 @@ GMAIL - CORREOS
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{% static 'js/busqueda.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
 {% endblock %}
-
-    

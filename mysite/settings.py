@@ -12,9 +12,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
-LOGIN_REDIRECT_URL = '/dashboard/'
-LOGOUT_REDIRECT_URL = '/loginregister/'
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -51,7 +48,8 @@ INSTALLED_APPS = [
     'historiaclinica',
     'inicio',
     'inventario',
-    'gmail_integration'
+    'gmail_integration',
+    
 ]
 
 MIDDLEWARE = [
@@ -60,7 +58,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'inicio.middleware.LoginRequiredMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -92,7 +89,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dental',
+        'NAME': 'presentacion_final',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -102,7 +99,7 @@ DATABASES = {
         }
     }
 }
-
+MYSQL_DUMP_PATH = os.getenv('MYSQL_DUMP_PATH', 'C:/Program Files/MySQL/MySQL Server 8.0/bin/mysqldump.exe')
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -112,6 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -120,6 +120,15 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

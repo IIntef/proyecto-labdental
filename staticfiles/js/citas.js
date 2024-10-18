@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
         minDate: "today",
         inline: true,
         static: true,
+        locale: "es",
         onChange: function(selectedDates, dateStr, instance) {
             const fechaValida = selectedDates.length > 0;
 

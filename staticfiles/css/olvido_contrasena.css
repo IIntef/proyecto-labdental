@@ -1,0 +1,118 @@
+/* Estilo base */
+body {
+    font-family: 'Roboto', sans-serif; /* Cambié la fuente a 'Roboto' para un look más moderno */
+    background-image: url('../img/Fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.9); /* Hice el fondo un poco más claro */
+    padding: 40px;
+    border: 1px solid #ddd;
+    border-radius: 50px; /* Bordes más redondeados */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sombra más prominente */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    animation: slideIn 1s ease-in-out;
+}
+.post{
+    background-color: #ccc;
+    max-width: 800px;
+}
+
+/* Encabezado */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #333;
+    text-transform: uppercase; /* Transformación del texto para hacerlo más impactante */
+    letter-spacing: 2px;
+    animation: pulse 1s infinite ease-in-out; /* Animación de pulso en el título */
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Grupo de formulario */
+.form-group {
+    margin-bottom: 20px;
+    animation: fadeIn 1.5s ease-in-out; /* Animación de entrada suave para cada grupo de formulario */
+}
+
+/* Campo de entrada */
+.form-control {
+    padding: 12px; /* Espaciado mayor */
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Bordes más redondeados */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px; /* Tamaño de fuente más grande */
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Color de borde al hacer foco */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Sombra azul al hacer foco */
+}
+
+/* Botón */
+.btn-primary {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color:#cab97d;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    background-color: #ffde64;
+    transform: translateY(-2px); /* Efecto de desplazamiento al pasar el cursor */
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-50px); /* Ajustado para un efecto de deslizamiento más sutil */
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}

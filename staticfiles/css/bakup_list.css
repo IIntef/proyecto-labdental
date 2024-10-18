@@ -1,0 +1,135 @@
+/* Estilos generales */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+  }
+  .btn-create-backup {
+    background-color: #cab97d;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-create-backup:hover {
+    background-color: #e7c23a;
+  }
+  
+  .btn-create-backup i {
+    margin-right: 10px;
+  }
+  
+  
+  
+  
+  h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  h1 i {
+    margin-right: 10px;
+    font-size:50px;
+    color: #423f31;
+  }
+  
+  
+  /* Estilos para la tabla */
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #f0f0f0;
+  }
+  
+  /* Estilos para los botones */
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .btn-primary:hover{
+    background-color: #776b40;
+  }
+  .btn-primary {
+    background-color: #cab97d;
+    color: #fff;
+  }
+  .btn-warning:hover {
+    background-color: #946c31;
+    color: #fff;
+  }
+  .btn-warning {
+    background-color: #bb883b;
+    color: #fff;
+  }
+  
+  .btn-danger {
+    background-color: #58221f;
+    color: #fff;
+  }
+  
+  /* Estilos para los modales */
+  .modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal-header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .modal-footer {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s;
+  }
+  
+  .fade-out {
+    animation: fadeOut 0.5s;
+  }
+  
+  

@@ -1,5 +1,5 @@
 /* Estilos generales */
-i.a{
+i.a {
   color: #f8f9fa;
 }
 .btn-custom {
@@ -9,31 +9,9 @@ i.a{
   width: auto;
 }
 
-.input-group {
-  width: auto;
-}
-
-#searchInput, #estadoFilter {
+#estadoFilter {
   height: 38px;
   font-size: 0.9rem;
-}
-
-/* Estilos para la barra de búsqueda y filtro */
-.input-group-text {
-  background-color: #f8f9fa;
-  border: 1px solid #ced4da;
-}
-
-.input-group-text i {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.form-control:focus, .form-select:focus {
-  box-shadow: none;
-  border-color: #ced4da;
 }
 
 /* Centrando la tabla */
@@ -42,55 +20,19 @@ i.a{
   text-align: center;
 }
 
-
-.custom-select-wrapper {
-  position: relative;
-}
-
-.custom-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: transparent;
-  padding-right: 2rem;
-  cursor: pointer;
-}
-
-.custom-select::-ms-expand {
-  display: none;
-}
-
-.custom-select-trigger {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 2.8rem;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f8f9fa;
-  border: 1px solid #ced4da;
-  border-left: none;
-}
-
-.custom-select-trigger i {
-  pointer-events: auto;
-  cursor: pointer;
-}
-
 /* Estilos para los controles de paginación */
-.pagination-controls {
-  font-size: 0.9rem;
-}
-
 .pagination a {
   text-decoration: none;
-  color: #007bff;
+  color: #1eff00;
   padding: 0.5rem 0.75rem;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
+}
+
+
+.paginate_button:hover {
+  background-color: #81c784; /* Verde más oscuro al pasar el ratón */
+  color: #fff;
 }
 
 .page-link {
@@ -107,25 +49,9 @@ i.a{
   border-color: #ced4da;
 }
 
-.pagination-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-.show-items {
-  display: flex;
-  align-items: center;
-}
-
-.show-items select {
-  margin: 0 0.5rem;
-}
-
 .pagination {
   display: flex;
-  margin-left: auto; /* Alinea la paginación a la derecha */
+  margin-left: auto;
 }
 
 @media (max-width: 767px) {
@@ -133,18 +59,19 @@ i.a{
     margin-right: 0 !important;
   }
 
-  .btn-custom span {
-    display: none;
+  .table-responsive {
+    overflow-x: auto;
   }
 
-  .input-group-text span {
+  .btn-custom span {
     display: none;
   }
 
   .input-group-text i {
     margin-right: 0 !important;
   }
-  #estadoFilter{
+
+  #estadoFilter {
     width: 0;
   }
 }
@@ -155,6 +82,17 @@ i.a{
   overflow: hidden;
 }
 
+.btn-success {
+  background-color: #008a07;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #00cc0a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 59, 48, 0.3);
+}
+
 .card-header .btn-success {
   background-color: #cab97d;
   border: none;
@@ -162,6 +100,7 @@ i.a{
   font-weight: bold;
   transition: all 0.3s ease;
 }
+
 .btn-primary {
   background-color: #cab97d;
   border: none;
@@ -169,11 +108,13 @@ i.a{
   font-weight: bold;
   transition: all 0.3s ease;
 }
+
 .card-header .btn-success:hover {
   background-color: #9e905c;
   transform: translateY(-2px);
   box-shadow: 0 4px 10px #f0e9d2;
 }
+
 .btn-primary:hover {
   background-color: #9e905c;
   transform: translateY(-2px);
@@ -183,6 +124,7 @@ i.a{
 .card-body {
   padding: 30px;
   border-color: #000000;
+  overflow-x: scroll;
 }
 
 .card-title {
@@ -195,6 +137,7 @@ i.a{
 .table-responsive {
   border-radius: 10px;
   overflow: hidden;
+  overflow-x: visible;
 }
 
 .table {
@@ -261,50 +204,290 @@ i.a{
   box-shadow: 0 4px 10px rgba(255, 59, 48, 0.3);
 }
 
-/* Modal styles */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+.btn-custom {
+  text-transform: capitalize;
+  font-size: 1.05rem;
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-.modal-content p {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 20px;
+.card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+.card-header,
+.card-body {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+.card-header {
+  border-radius: 15px 15px 0 0;
 }
 
 .btn-custom {
-  text-transform: capitalize; 
-  font-size: 1.05rem; 
+  border-radius: 20px;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
 }
+
+.btn-custom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+  background-color: white;
+  border-radius: 15px;
+}
+
+#elementosTable {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  border: 0.5px solid #d3d3d3;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+#elementosTable thead th {
+  color: white;
+  font-weight: 600;
+  border-bottom: 2px solid #d3d3d3;
+}
+
+#elementosTable tbody tr {
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+#elementosTable tbody tr:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#elementosTable th,
+#elementosTable td {
+  padding: 15px;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+}
+
+#elementosTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.form-control,
+.form-select {
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  padding: 10px 15px;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #4a5568;
+}
+
+#filtroForm {
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode {
+  background-color: #121212; /* Fondo oscuro para el body */
+  color: #e0e0e0; /* Color de texto claro para el body */
+}
+
+.dark-mode .headersup {
+  background-color: #1a1a1a; /* Fondo de la parte superior en modo oscuro */
+}
+
+.dark-mode .headerinf {
+  background-color: #272727; /* Fondo de la parte inferior en modo oscuro */
+}
+
+.dark-mode .table thead th {
+  background-color: #383838; /* Fondo de los encabezados en modo oscuro */
+  color: #ffffff; /* Texto blanco para los encabezados */
+}
+
+.dark-mode .table tbody tr:nth-child(even) {
+  background-color: #2a2a2a; /* Fondo alternativo en modo oscuro */
+  color: #ffff;
+}
+
+.dark-mode .table tbody tr:hover {
+  background-color: #3b3b3b; /* Color al pasar el mouse en modo oscuro */
+  color: #ffff;
+}
+
+.dark-mode .btn-success {
+  background-color: #3b3b3b; /* Botón de éxito en modo oscuro */
+  color: #e0e0e0;
+}
+
+.dark-mode .btn-primary {
+  background-color: #3b3b3b; /* Botón primario en modo oscuro */
+  color: #e0e0e0;
+}
+
+
+.dark-mode .btn-warning {
+  background-color: #201f1f; /* Botón de advertencia en modo oscuro */
+  color: #ffff;
+}
+.dark-mode btn .btn-warning {
+  background-color: #070707; /* Botón de advertencia en modo oscuro */
+}
+
+.dark-mode .btn-danger {
+  background-color: #691511; /* Botón de peligro en modo oscuro */
+}
+
+.dark-mode .card {
+  background-color: #1a1a1a; /* Fondo de las tarjetas en modo oscuro */
+}
+
+.dark-mode .card-header,
+.dark-mode .card-body {
+  background-color: #2a2a2a; /* Fondo de las tarjetas en modo oscuro */
+}
+
+.dark-mode .table td {
+  background-color: #2a2a2a; /* Fondo de las celdas en modo oscuro */
+  color: #e0e0e0; /* Color de texto claro para las celdas */
+}
+.dark-mode .flatpickr-calendar animate  {
+  background-color: #2a2a2a; /* Fondo de las celdas en modo oscuro */
+  color: #e0e0e0; /* Color de texto claro para las celdas */
+}
+
+.dark-mode .pagination a {
+  color: #e0e0e0; /* Color de los enlaces de paginación en modo oscuro */
+}
+.dark-mode .pagination {
+  color: #e0e0e0; /* Color de los enlaces de paginación en modo oscuro */
+}
+.dark-mode .table-container {
+  color: #ffffff; 
+  background-color: #272727;/* Color de los títulos en modo oscuro */
+}
+.dark-mode #filtroForm {
+  background-color: rgb(34, 34, 34);
+
+  color: #ffffff; 
+}
+.dark-mode .form-label{
+  background-color: rgb(34, 34, 34);
+
+  color: #ffffff; 
+}
+.dark-mode .col-lg-8 .text-lg-start{
+  background-color: rgb(34, 34, 34);
+
+  color: #ffffff; 
+}
+.dark-mode .form-control{
+  background-color: rgb(34, 34, 34);
+
+  color: #ffffff; 
+}
+.dark-mode .form-select{
+  background-color: rgb(34, 34, 34);
+
+  color: #ffffff; 
+}
+.dark-mode .nav .button{
+  background-color: rgb(34, 34, 34);
+
+  color: #ffffff; 
+}
+.dark-mode .btn-info {
+  background-color: rgb(36, 36, 36); /* Color de fondo en modo oscuro */
+  color: #ffffff; /* Color del texto */
+  border: none; /* Quitar el borde */
+  box-shadow: none; /* Quitar sombras */
+  border-radius: 5px; /* Ajustar el radio de borde si es necesario */
+}
+
+
+.dark-mode .btn-danger {
+  background-color: rgb(18, 18, 18);
+
+  color: #ffffff; 
+}
+.dark-mode .card-title {
+
+  color: #ffffff; 
+}
+.dark-mode .footer {
+  background-color: rgb(18, 18, 18);
+
+  color: #ffffff; 
+}
+.dark-mode .col-lg-8  {
+  background-color: rgb(18, 18, 18);
+
+  color: #ffffff; 
+}
+.dark-mode .text-lg-start {
+  background-color: rgb(18, 18, 18);
+
+  color: #ffffff; 
+}
+.dark-mode .row{
+
+  color: #ffffff;   
+}
+.dark-mode .br{
+
+  color: #ffffff;   
+}
+.dark-mode-toggle {
+  position: fixed;
+  bottom: 80px;
+  right: 19px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #333;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;  
+  padding: 0;
+  margin: 0;
+  font-size: 24px;
+}
+
+.dark-mode-toggle i {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1;
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
+}
+
+
+
+
+

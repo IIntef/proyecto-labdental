@@ -1,0 +1,204 @@
+/* Profile Edit Page Styles */
+:root {
+    --font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body {
+    font-family: var(--font-family);
+}
+
+.card {
+    max-width: 100%;
+    width: 800px;
+    margin: 1rem auto;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+
+.profile-picture-container {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    margin: 0 auto;
+    border: 4px solid #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.name {
+    font-size: 1.25rem;
+    color: #444;
+    text-align: center;
+    margin-bottom: 0.75rem;
+}
+
+.line {
+    height: 2px;
+    background: linear-gradient(to right, transparent, #007bff, transparent);
+    margin: 0.75rem 0;
+}
+
+.status {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.status.active {
+    color: #28a745;
+}
+
+.status.inactive {
+    color: #dc3545;
+}
+
+.profile-btn {
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-family);
+}
+
+.profile-btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #fff;
+}
+
+.profile-btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.profile-btn-save {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+
+.profile-btn-save:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.profile-btn-cancel {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #fff;
+}
+
+.profile-btn-cancel:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.profile-btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+}
+
+.profile-btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: var(--font-family);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .profile-picture {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .name {
+        font-size: 1.1rem;
+    }
+    
+    .profile-btn {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .profile-picture {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .name {
+        font-size: 1rem;
+    }
+    
+    .form-control, .form-select {
+        padding: 0.5rem;
+    }
+    
+    .profile-btn {
+        padding: 0.5rem 1rem;
+    }
+}

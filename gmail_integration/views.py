@@ -1,20 +1,27 @@
-import os
 import logging
+import os
+
+from django.conf import settings
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.mail import send_mail
 from django.db import IntegrityError
-from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.views.decorators.cache import never_cache
+
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from django.shortcuts import redirect, render
-from django.conf import settings
-from django.http import HttpResponse
+from googleapiclient.http import MediaFileUpload
+
 import inicio.views as traer
+
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
 
 # Configura el flujo OAuth2
 flow = Flow.from_client_secrets_file(
@@ -25,15 +32,9 @@ flow = Flow.from_client_secrets_file(
 )
 flow.redirect_uri = 'http://localhost:8000/gmail/oauth2callback2/'
 
-from django.core.mail import send_mail
-from django.http import HttpResponse
-from googleapiclient.errors import HttpError
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
-from google.oauth2.credentials import Credentials
-from django.conf import settings
 
-@login_required
+@never_cache
+@login_required(login_url='acceso_denegado')
 @user_passes_test(traer.es_superusuario, login_url='acceso_denegado')
 def send_email(request):
     if request.method == 'POST':
@@ -64,6 +65,7 @@ def send_email(request):
     
     return HttpResponse("Método no permitido", status=405)
 
+
 def create_message(sender, to, subject, body):
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
@@ -78,6 +80,7 @@ def create_message(sender, to, subject, body):
     raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
     return {'raw': raw_message}
 
+
 def send_message(service, sender, message):
     try:
         message = service.users().messages().send(userId=sender, body=message).execute()
@@ -88,7 +91,8 @@ def send_message(service, sender, message):
         raise
 
 
-@login_required
+@never_cache
+@login_required(login_url='acceso_denegado')
 @user_passes_test(traer.es_superusuario, login_url='acceso_denegado')
 def gmail_auth(request):
     if 'credentials' in request.session:
@@ -96,23 +100,31 @@ def gmail_auth(request):
     authorization_url, _ = flow.authorization_url(prompt='consent', access_type='offline')
     return redirect(authorization_url)
 
-@login_required
+
+@never_cache
+@login_required(login_url='acceso_denegado')
 @user_passes_test(traer.es_superusuario, login_url='acceso_denegado')
 def oauth2callback2(request):
     try:
         flow.fetch_token(code=request.GET.get('code'))
         credentials = flow.credentials
         
+        # Log the credentials (be careful not to log sensitive information in production)
+        logger.info(f"Credentials obtained: {credentials}")
+        
         # Guarda las credenciales en la sesión
-        request.session['credentials'] = credentials_to_dict(credentials)
-        logger.info("Credenciales guardadas exitosamente")
+        credentials_dict = credentials_to_dict(credentials)
+        request.session['credentials'] = credentials_dict
+        logger.info(f"Credentials saved to session: {credentials_dict}")
         
         return redirect('gmail_inbox')
     except Exception as e:
         logger.error(f"Error en oauth2callback: {e}")
         return HttpResponse("Error during authentication process", status=400)
 
-@login_required
+
+@never_cache
+@login_required(login_url='acceso_denegado')
 @user_passes_test(traer.es_superusuario, login_url='acceso_denegado')
 def gmail_inbox(request):
     if 'credentials' not in request.session:
@@ -120,18 +132,24 @@ def gmail_inbox(request):
         return redirect('gmail_auth')
     
     try:
-        credentials = Credentials(**request.session['credentials'])
-        
-        # Verifica si el token ha expirado y refresca si es necesario
+        credentials_dict = request.session['credentials']
+        credentials = Credentials(**credentials_dict)
+
         if credentials.expired and credentials.refresh_token:
-            credentials.refresh(Request())
-            request.session['credentials'] = credentials_to_dict(credentials)
+            try:
+                credentials.refresh(Request())
+                request.session['credentials'] = credentials_to_dict(credentials)
+            except Exception as e:
+                logger.error(f"Error al refrescar el token: {e}")
+                del request.session['credentials']
+                return redirect('gmail_auth')
 
         service = build('gmail', 'v1', credentials=credentials)
         
+        # Llamada a la API para obtener los mensajes
         results = service.users().messages().list(userId='me', maxResults=10).execute()
         messages = results.get('messages', [])
-        
+
         email_list = []
         for message in messages:
             msg = service.users().messages().get(userId='me', id=message['id']).execute()
@@ -140,20 +158,22 @@ def gmail_inbox(request):
                 'subject': next((header['value'] for header in msg['payload']['headers'] if header['name'] == 'Subject'), 'No Subject'),
                 'snippet': msg['snippet']
             })
-        
+
         return render(request, 'gmail_inbox.html', {'email_list': email_list})
+
     except HttpError as error:
         logger.error(f"Error al acceder a Gmail: {error}")
-        if error.resp.status == 401:
-            # Token expirado o inválido, intentar refrescar
+        if error.resp.status in [401, 403]:
             del request.session['credentials']
             return redirect('gmail_auth')
-        elif error.resp.status == 403:
-            return HttpResponse("Permisos insuficientes para acceder a los correos", status=403)
+    except Exception as e:
+        logger.error(f"Unexpected error in gmail_inbox: {e}")
+        return HttpResponse("An unexpected error occurred", status=500)
+
+        
     return HttpResponse("Error al acceder a tus correos de Gmail", status=500)
 
-@login_required
-@user_passes_test(traer.es_superusuario, login_url='acceso_denegado')
+
 def credentials_to_dict(credentials):
     return {
         'token': credentials.token,
@@ -163,3 +183,4 @@ def credentials_to_dict(credentials):
         'client_secret': credentials.client_secret,
         'scopes': credentials.scopes
     }
+

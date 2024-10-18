@@ -1,16 +1,25 @@
-.compose-email {
-    width: 30%;
-}
-
 .email-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 900px;
+    margin: 20px auto;
 }
-
 .inbox {
-    overflow-y: auto; /* Activa el scroll vertical */
-    border: 1px solid #ddd; /* Opcional: para ver los límites del contenedor */
-    border-radius: 5px; /* Opcional: para bordes redondeados */
-    padding: 10px; /* Espacio interno */
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
 }
-
+.compose-email {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+}
+.email-list-item {
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px 0;
+    transition: background-color 0.3s;
+}
+.email-list-item:hover {
+    background-color: #f1f1f1;
+}

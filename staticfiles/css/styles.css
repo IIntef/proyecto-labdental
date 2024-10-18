@@ -1,48 +1,22 @@
-@import url('https://fonts.googleapis.com/css?family=Fredoka One');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
 
+:root {
+  --primary-font: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
 
-*{
+* {
   box-sizing: border-box;
-}
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Times New Roman', Times, serif, Helvetica, Arial, sans-serif;
-  display: flex;
-  min-height: 100vh;
-  width: 100%;
-  background-size: cover;
+  font-family: var(--primary-font);
 }
 
-header {
-  position: relative;
-  background-color: #232323;
-  width: fit-content;
-  height: 100vh;
+main {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  z-index: 1;
-}
-
-.content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  height: 88vh;
 }
 
 .header2 {
@@ -58,10 +32,13 @@ header {
   padding: 15px;
   position: relative;
   width: 100%;
-  height: 9vw;
-  max-height: 8vh;
+  height: clamp(50px, 9vw, 80px);
   flex-direction: row;
   align-items: center;
+}
+
+.returnhome {
+  width: fit-content;
 }
 
 .headerinf {
@@ -70,24 +47,19 @@ header {
   color: white;
   position: relative;
   width: 100%;
-  height: 7vw;
-  max-height: 6vh;
-  flex-direction: row;
+  height: clamp(40px, 7vw, 60px);
   align-items: center;
   overflow: hidden;
   white-space: nowrap;
 }
 
-/* El contenido principal debajo de las barras superiores */
 .content > *:not(.header2) {
   overflow-y: auto;
   flex: 1;
 }
 
-/* Ajustes adicionales para elementos dentro del header */
 header img {
-  width: 8vw;
-  max-width: 60px;
+  width: clamp(30px, 8vw, 60px);
 }
 
 header h1 {
@@ -100,56 +72,36 @@ header h1 {
   font-weight: bold;
 }
 
-h1{
+h1 {
   margin: 0;
   color: white;
-  font-family: 'Fredoka One';
+  font-family: var(--primary-font);
   letter-spacing: 1.5px;
   font-size: clamp(1.5rem, 2.5vw, 2rem);
 }
 
-p{
-  font-weight: 100;
-  line-height: 20px;
-  letter-spacing: 0.5px;
-  margin: 15px 0 20px;
-}
-
-.headersup a{
+.headersup a {
   color: white;
-  font-size: 17px;
+  font-size: clamp(0.8rem, 2vw, 1.1rem);
   text-decoration: none;
   margin: 15px 3px;
 }
 
-#home{
+#home {
   font-size: clamp(0.85rem, 2.5vw, 1.5rem);
   float: left;
   width: 38%;
   margin: 0;
 }
 
-#home2{
-  display: inline-block;
-  font-family: 'Fredoka One';
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-  padding-left: 50%;
-  animation: marquee 15s linear infinite;
+#home2 {
+  font-family: var(--primary-font);
+  font-size: clamp(0.85rem, 2.5vw, 1.5rem);
   width: fit-content;
-  margin-right: 0;
+  margin-left: 20px;
 }
 
-
-@keyframes marquee {
-  from {
-      transform: translateX(100%);
-  }
-  to {
-      transform: translateX(-100%);
-  }
-}
-
-input{
+input {
   width: 100%;
   color: #232323;
   font-size: clamp(0.85rem, 2.5vw, 1rem);
@@ -158,43 +110,117 @@ input{
   background: transparent;
 }
 
-i{
-  font-size: clamp(0.85rem, 2.5vw, 1rem);
-  color: #232323;
-  cursor: pointer;
+.botones {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.navbar {
+.titulomain {
+  text-align: center;
+}
+
+.botonesdos {
   display: flex;
-  justify-content: right;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.boton1 {
+  display: flex;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
+  width: clamp(150px, 30vw, 200px);
+}
+
+.boton {
+  background-color: #CAB97D;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
   width: 100%;
 }
 
+.icon {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-top: 10px;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item .nav-link {
+  display: flex;
+  align-items: center;
+  font-size: clamp(0.85rem, 2vw, 0.9rem);  
+}
+
+.mastheadd {
+  padding-bottom: 3rem; 
+  text-align: center; 
+  color: #fff; 
+  background-repeat: no-repeat; 
+  background-attachment: scroll; 
+  background-position: center center; 
+  background-size: cover;
+  height: 120px;
+}
+
+#mainNav {
+  z-index: 1000;
+}
+
+.navbar-nav .dropdown-menu {
+  background-color: #383A3F;
+  border: 1px solid #383A3F;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0;
+}
+
+.navbar-nav .dropdown-item {
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  font-size: clamp(0.75rem, 2vw, 1rem);
+}
+
+.navbar-nav .dropdown-item:hover {
+  background-color: #575757;
+  color: #ffffff;
+}
+
+.navbar-nav .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+}
+
+.nav-item.dropdown.show .dropdown-menu {
+  display: block;
+}
+
+.second-navbar {
+  top: 80px;
+  z-index: 999;
+  background-color: #212529fa;
+}
+
+.second-navbar .navbar {
+  padding: 0.5rem 1rem;
+}
+
 .navbar-list {
-  padding-top: 15px;
+  padding-top: 0px;
   display: flex;
   position: relative;
   padding-right: 0.6rem;
   overflow: hidden;
   width: 0;
-}
-.profile-dropdown {
-  position: relative;
-  width: fit-content;
-}
-
-
-.navbar-list li {
-  display: inline-block;
-  margin: 0 0.5rem;
-}
-
-.navbar-list li a {
-  font-size: 1rem;
-  font-weight: 500;
-  color: white;
-  text-decoration: none;
 }
 
 .profile-dropdown {
@@ -206,37 +232,31 @@ i{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
   font-weight: 500;
-  width: 50px;
   border-radius: 50px;
   cursor: pointer;
   border: 1px solid;
+  color: #ffffff;
 }
 
-.profile-dropdown-btn:hover {
-  width: fit-content;
-  color: white;
-  span{
-    margin-top: 3px;
-    display: block;
-  }
-}
-
+.profile-dropdown-btn:hover,
 .profile-dropdown-btn.show-caption {
-  width: fit-content;
+  height: clamp(40px, 7vw, 45px);
   color: white;
-  span{
-    margin-top: 3px;
-    display: block;
-  }
+}
+
+.profile-dropdown-btn:hover span,
+.profile-dropdown-btn.show-caption span {
+  margin-top: 3px;
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
 }
 
 .profile-img {
-  width: 7vw;
-  height: 7vw;
-  max-width: 45px;
-  max-height: 45px;
+  width: clamp(40px, 7vw, 45px);
+  height: clamp(40px, 7vw, 45px);
   border-radius: 50%;
   overflow: hidden;
   position: relative;
@@ -253,48 +273,82 @@ i{
   padding: 10px 0;
   text-align: center;
   height: 42px;
-  font-family: 'Fredoka One';
-  font-size: clamp(0.4rem, 2vw,0.8rem);
+  font-family: var(--primary-font);
+  font-size: clamp(0.4rem, 2vw, 0.8rem);
   letter-spacing: 2px;
   margin: 0 0.5rem;
   display: none;
+  color: #ffffff;
 }
 
 .navbar-list.active {
   width: fit-content;
+  max-height: 45px;
 }
 
 .profile-dropdown-list-item {
   width: fit-content;
   transition: background-color 0.2s ease-in, padding-left 0.2s;
-  span{
-    display: none;
-  }
 }
 
-.profile-dropdown-list-item.hover{
-  width: fit-content;
+.profile-dropdown-list-item span {
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  display: none;
+}
+
+.profile-dropdown-list-item.hover {
+  height: clamp(40px, 7vw, 45px);
   transition: background-color 0.2s ease-in, padding-left 0.2s;
-  span{
-    display: contents;
-  }
 }
 
-.profile-dropdown-list-item a {
+.profile-dropdown-list-item.hover span {
+  display: contents;
+}
+
+.breadcrumbs {
   display: flex;
   align-items: center;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
   color: #ffffff;
+  padding: 0;
+  margin: 0;
+  font-family: var(--primary-font);
 }
 
-.profile-dropdown-list-item a i {
-  font-size: 1rem;
-  width: 1.8rem;
-  height: 1.8rem;
-  color: white;
-  line-height: 1.8rem;
-  text-align: center;
-  border-radius: 50%;
-  transition: margin-right 0.3s;}
+.breadcrumbs a {
+  color: #ffffff;
+  text-decoration: none;
+  margin-right: 10px;
+  transition: color 0.3s ease;
+}
+
+.breadcrumbs a:hover {
+  color: #dcdcdc;
+}
+
+@media screen and (max-width: 768px) {
+  .headersup {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .headerinf {
+    height: auto;
+    padding: 10px;
+  }
+
+  .profile-dropdown-btn span {
+    display: none;
+  }
+
+  .botonesdos {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .boton1 {
+    width: 80%;
+    margin-bottom: 15px;
+  }
+}
